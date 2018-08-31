@@ -1,3 +1,5 @@
 <view class="container">
-  <image src="{{image}}" />
+  <scroll-view scroll-y>
+    <image src="{{bandoriImages[200]}}" />
+  </scroll-view>
 </view>
