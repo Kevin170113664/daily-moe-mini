@@ -27,10 +27,10 @@
     <repeat for="{{bandoriImages}}" key="index" index="index" item="images">
       <view class="image-grid">
         <view class="image-left">
-          <image mode="aspectFill" src="{{images[0]}}"/>
+          <image mode="aspectFill" src="{{images[0]}}" @tap="preview({{images[0]}})"/>
         </view>
         <view class="image-right">
-          <image mode="aspectFill" src="{{images[1]}}"/>
+          <image mode="aspectFill" src="{{images[1]}}" @tap="preview({{images[1]}})"/>
         </view>
       </view>
     </repeat>
@@ -45,9 +45,9 @@
   const imageBaseUrl = 'https://hinatsuruai.chinacloudsites.cn/'
 
   @connect({
-    num(state) {
-      return state.counter.num
-    }
+    // num(state) {
+    //   return state.counter.num
+    // }
   })
 
   export default class Index extends wepy.page {
@@ -61,6 +61,12 @@
     methods = {
       loadMorePictures() {
         this.requestCards()
+      },
+      preview(image) {
+        wepy.previewImage({
+          current: image,
+          urls: [image]
+        })
       }
     };
 
