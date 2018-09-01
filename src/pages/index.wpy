@@ -89,5 +89,12 @@
     onLoad() {
       this.requestCards()
     }
+
+    onUnload() {
+      this.bandoriImages = []
+      this.existingImageIds = []
+    }
+
+    des
   }
 </script>
