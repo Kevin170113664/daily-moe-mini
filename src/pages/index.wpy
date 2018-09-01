@@ -1,12 +1,42 @@
 <style lang="less">
+  .image-grid {
+    height: 50.5vw;
+  }
+
+  .image-left, .image-right {
+    width: 49.5vw;
+    display: inline-block;
+  }
+
+  .image-left {
+    margin-right: 0.5vw;
+  }
+
+  .image-right {
+    margin-left: 0.5vw;
+  }
+
+  .image-left > image, .image-right > image {
+    width: 49.5vw;
+    height: 49.5vw;
+  }
 </style>
+
 <template>
-  <view class="container">
-    <image src="{{bandoriImages[100]}}"/>
-  </view>
+  <repeat for="{{bandoriImages}}" key="index" index="index" item="images">
+    <view class="image-grid">
+      <view class="image-left">
+        <image mode="aspectFill" src="{{images[0]}}"/>
+      </view>
+      <view class="image-right">
+        <image mode="aspectFill" src="{{images[1]}}"/>
+      </view>
+    </view>
+  </repeat>
 </template>
 
 <script>
+  import _ from 'lodash'
   import wepy from 'wepy'
   import {connect} from 'wepy-redux'
 
@@ -32,7 +62,7 @@
       wepy.request({
         url: imageBaseUrl + '/api/bandori/artCards',
         success: function (res) {
-          that.bandoriImages = res.data
+          that.bandoriImages = _.chunk(res.data, 2)
           that.$apply()
         }
       })
