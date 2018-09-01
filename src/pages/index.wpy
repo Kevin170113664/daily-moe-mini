@@ -50,7 +50,8 @@
 
   export default class Index extends wepy.page {
     data = {
-      bandoriImages: []
+      bandoriImages: [],
+      existingImageIds: []
     };
 
     computed = {};
@@ -60,9 +61,10 @@
     onLoad() {
       const that = this
       wepy.request({
-        url: imageBaseUrl + '/api/bandori/artCards',
+        url: imageBaseUrl + '/api/bandori/randomCards',
         success: function (res) {
-          that.bandoriImages = _.chunk(res.data, 2)
+          that.bandoriImages = _.chunk(_.values(res.data), 2)
+          that.existingImageIds = _.keys(res.data)
           that.$apply()
         }
       })
