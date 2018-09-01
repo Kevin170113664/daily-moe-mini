@@ -1,5 +1,0 @@
-<view class="container">
-  <scroll-view scroll-y>
-    <image src="{{bandoriImages[200]}}" />
-  </scroll-view>
-</view>
