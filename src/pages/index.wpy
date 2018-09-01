@@ -23,16 +23,18 @@
 </style>
 
 <template>
-  <repeat for="{{bandoriImages}}" key="index" index="index" item="images">
-    <view class="image-grid">
-      <view class="image-left">
-        <image mode="aspectFill" src="{{images[0]}}"/>
+  <scroll-view scroll-y style="height: 100vh;" bindscrolltolower="loadMorePictures">
+    <repeat for="{{bandoriImages}}" key="index" index="index" item="images">
+      <view class="image-grid">
+        <view class="image-left">
+          <image mode="aspectFill" src="{{images[0]}}"/>
+        </view>
+        <view class="image-right">
+          <image mode="aspectFill" src="{{images[1]}}"/>
+        </view>
       </view>
-      <view class="image-right">
-        <image mode="aspectFill" src="{{images[1]}}"/>
-      </view>
-    </view>
-  </repeat>
+    </repeat>
+  </scroll-view>
 </template>
 
 <script>
@@ -56,18 +58,30 @@
 
     computed = {};
 
-    methods = {};
+    methods = {
+      loadMorePictures() {
+        this.requestCards()
+      }
+    };
 
-    onLoad() {
+    requestCards() {
       const that = this
       wepy.request({
+        method: 'POST',
         url: imageBaseUrl + '/api/bandori/randomCards',
+        data: {
+          existingIds: that.existingImageIds
+        },
         success: function (res) {
-          that.bandoriImages = _.chunk(_.values(res.data), 2)
-          that.existingImageIds = _.keys(res.data)
+          that.bandoriImages = _.concat(that.bandoriImages, _.chunk(_.values(res.data), 2))
+          that.existingImageIds = _.concat(that.existingImageIds, _.keys(res.data))
           that.$apply()
         }
       })
+    }
+
+    onLoad() {
+      this.requestCards()
     }
   }
 </script>
