@@ -65,7 +65,7 @@
       preview(image) {
         wepy.previewImage({
           current: image,
-          urls: [image]
+          urls: _.flatten(this.bandoriImages)
         })
       }
     };
@@ -79,7 +79,7 @@
           existingIds: that.existingImageIds
         },
         success: function (res) {
-          that.bandoriImages = _.concat(that.bandoriImages, _.chunk(_.values(res.data), 2))
+          that.bandoriImages = _.chain(that.bandoriImages).flatten().concat(_.values(res.data)).chunk(2).value()
           that.existingImageIds = _.concat(that.existingImageIds, _.keys(res.data))
           that.$apply()
         }
