@@ -1,4 +1,8 @@
 <style lang="less">
+  page {
+    background: #b3d9ff;
+  }
+
   .image-grid {
     height: 50.5vw;
   }
