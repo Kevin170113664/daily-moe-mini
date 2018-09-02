@@ -78,7 +78,7 @@
       const that = this
       wepy.request({
         method: 'POST',
-        url: imageBaseUrl + '/api/bandori/randomCards',
+        url: imageBaseUrl + '/api/public/randomCards',
         data: {
           existingIds: that.existingImageIds
         },
